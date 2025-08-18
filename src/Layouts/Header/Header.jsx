@@ -5,7 +5,7 @@ export default function Header() {
     return (
         <header className="flex items-center justify-between border-b-[#F6F6F6] border-b-[1px] pb-[40px]">
             <div className="flex items-center gap-[17px]">
-                <img src="../../../src/img/logo.png" alt="Logo" width={40} />
+                <img src="/src/img/logo.png" alt="Logo" width={40} />
                 <div>
                     <h1 className="font-[900] text-2xl">REACT PIZZA</h1>
                     <p className="text-[16px] text-[#7B7B7B]">найсмачніша піца у всесвіті</p>
