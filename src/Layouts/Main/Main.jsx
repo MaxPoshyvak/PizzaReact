@@ -11,7 +11,6 @@ export default function Main() {
             try {
                 const response = await fetch('https://687fcf91f1dcae717b604f49.mockapi.io/pizza/items');
                 const data = await response.json();
-                console.log(data);
                 setPizzas(data);
             } catch (e) {
                 console.error(e);
@@ -27,6 +26,7 @@ export default function Main() {
             <div className="flex  gap-[9px] mb-[40px]">
                 {allPizzaClases.map((item) => (
                     <Button
+                        key={item}
                         onClick={() => setPizzaClass(item)}
                         sx={{
                             backgroundColor: '#282828',
