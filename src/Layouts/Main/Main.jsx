@@ -5,6 +5,7 @@ import Card from '../../../src/UI/Card/Card';
 export default function Main() {
     const [pizzaClass, setPizzaClass] = useState('Всі');
     const [pizzas, setPizzas] = useState([]);
+    const filteredPizzas = pizzas.filter((pizza) => pizza.classes.includes(pizzaClass));
 
     useEffect(() => {
         const fetchData = async () => {
@@ -49,19 +50,20 @@ export default function Main() {
                 ))}
             </div>
 
-            <div className="flex justify-between flex-wrap mt-[40px] gap-y-[65px] mx-auto">
-                {pizzas
-                    .filter((pizza) => pizza.classes.includes(pizzaClass))
-                    .map((pizza) => (
-                        <Card
-                            key={pizza.id}
-                            id={pizza.id}
-                            imgPath={pizza.imgPath}
-                            title={pizza.title}
-                            price={pizza.price}
-                            classes={pizza.classes}
-                        />
-                    ))}
+            <div
+                className={`flex ${
+                    filteredPizzas.length < 4 ? 'justify-start' : 'justify-between'
+                } flex-wrap mt-[40px] gap-y-[65px] gap-x-[45px] mx-auto`}>
+                {filteredPizzas.map((pizza) => (
+                    <Card
+                        key={pizza.id}
+                        id={pizza.id}
+                        imgPath={pizza.imgPath}
+                        title={pizza.title}
+                        price={pizza.price}
+                        classes={pizza.classes}
+                    />
+                ))}
             </div>
         </main>
     );
