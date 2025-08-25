@@ -1,11 +1,35 @@
 import { Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import Card from '../../../src/UI/Card/Card';
+import Sort from '../../../src/UI/Sort/Sort';
 
 export default function Main() {
+    const [sortType, setSortType] = useState('');
+
+    const handleValueChange = (newValue) => {
+        setSortType(newValue); // зберігаємо те, що повернула дитина
+    };
+
+    const allPizzaClases = ['Всі', "М'ясні", 'Гострі', 'Вегетаріанські', 'Гриль'];
     const [pizzaClass, setPizzaClass] = useState('Всі');
     const [pizzas, setPizzas] = useState([]);
-    const filteredPizzas = pizzas.filter((pizza) => pizza.classes.includes(pizzaClass));
+
+    const filteredPizzas = pizzaClass === 'Всі' ? pizzas : pizzas.filter((pizza) => pizza.classes.includes(pizzaClass));
+
+    const sortedPizzas = [...filteredPizzas].sort((a, b) => {
+        switch (sortType) {
+            case 'Ціною':
+                return a.price - b.price;
+            case 'price-desc':
+                return b.price - a.price;
+            case 'Алфавітом':
+                return a.title.localeCompare(b.title, 'uk');
+            case 'Популярністю':
+                return b.popularity - a.popularity;
+            default:
+                return 0;
+        }
+    });
 
     useEffect(() => {
         const fetchData = async () => {
@@ -21,40 +45,42 @@ export default function Main() {
         fetchData();
     }, []);
 
-    const allPizzaClases = ['Всі', "М'ясні", 'Гострі', 'Вегетаріанські', 'Гриль'];
     return (
         <main className="py-[40px]">
-            <div className="flex  gap-[9px] mb-[40px]">
-                {allPizzaClases.map((item) => (
-                    <Button
-                        key={item}
-                        onClick={() => setPizzaClass(item)}
-                        sx={{
-                            backgroundColor: '#282828',
-                            borderRadius: '30px',
-                            height: '45px',
-                            color: 'white',
-                            display: 'flex',
-                            alignItems: 'center',
-                            pl: '30px',
-                            pr: '30px',
-                            fontSize: '15px',
-                            fontWeight: '600',
-                            textTransform: 'none',
-                            '&:hover': {
-                                backgroundColor: '#555555',
-                            },
-                        }}>
-                        {item}
-                    </Button>
-                ))}
+            <div className="flex justify-between items-center">
+                <div className="flex  gap-[9px] mb-[40px]">
+                    {allPizzaClases.map((item) => (
+                        <Button
+                            key={item}
+                            onClick={() => setPizzaClass(item)}
+                            sx={{
+                                backgroundColor: '#282828',
+                                borderRadius: '30px',
+                                height: '45px',
+                                color: 'white',
+                                display: 'flex',
+                                alignItems: 'center',
+                                pl: '30px',
+                                pr: '30px',
+                                fontSize: '15px',
+                                fontWeight: '600',
+                                textTransform: 'none',
+                                '&:hover': {
+                                    backgroundColor: '#555555',
+                                },
+                            }}>
+                            {item}
+                        </Button>
+                    ))}
+                </div>
+                <Sort onValueChange={handleValueChange} />
             </div>
 
             <div
                 className={`flex ${
-                    filteredPizzas.length < 4 ? 'justify-start' : 'justify-between'
+                    sortedPizzas.length < 4 ? 'justify-start' : 'justify-between'
                 } flex-wrap mt-[40px] gap-y-[65px] gap-x-[45px] mx-auto`}>
-                {filteredPizzas.map((pizza) => (
+                {sortedPizzas.map((pizza) => (
                     <Card
                         key={pizza.id}
                         id={pizza.id}
