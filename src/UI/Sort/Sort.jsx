@@ -6,7 +6,6 @@ export default function Sort({ onValueChange }) {
 
     const options = ['Популярністю', 'Ціною', 'Алфавітом'];
 
-    // Викликати callback тільки коли sort змінюється
     useEffect(() => {
         onValueChange(sort);
     }, [sort, onValueChange]);

@@ -1,31 +1,59 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Radio = ({ size, type }) => {
+const Radio = ({ size, typeName, sizes, types }) => {
+    const firstAvailableSize = sizes[0];
+    const firstAvailableType = types[0];
+
     return (
         <StyledWrapper>
             <div className="radio-inputs">
                 <div>
                     <label className="radio">
-                        <input type="radio" name={type} defaultChecked />
+                        <input
+                            type="radio"
+                            name={typeName}
+                            disabled={!types.includes('тонка')}
+                            defaultChecked={firstAvailableType == 'тонка'}
+                        />
                         <span className="name">Тонка</span>
                     </label>
                     <label className="radio">
-                        <input type="radio" name={type} />
+                        <input
+                            type="radio"
+                            name={typeName}
+                            disabled={!types.includes('традиційна')}
+                            defaultChecked={firstAvailableType == 'традиційна'}
+                        />
                         <span className="name">Традиційна</span>
                     </label>
                 </div>
                 <div>
                     <label className="radio">
-                        <input type="radio" name={size} defaultChecked />
+                        <input
+                            type="radio"
+                            name={size}
+                            disabled={sizes.includes(26) ? false : true}
+                            defaultChecked={firstAvailableSize === 26}
+                        />
                         <span className="name">26 см</span>
                     </label>
                     <label className="radio">
-                        <input type="radio" name={size} />
+                        <input
+                            type="radio"
+                            name={size}
+                            disabled={sizes.includes(30) ? false : true}
+                            defaultChecked={firstAvailableSize === 30}
+                        />
                         <span className="name">30 см</span>
                     </label>
                     <label className="radio">
-                        <input type="radio" name={size} />
+                        <input
+                            type="radio"
+                            name={size}
+                            disabled={sizes.includes(40) ? false : true}
+                            defaultChecked={firstAvailableSize === 40}
+                        />
                         <span className="name">40 см</span>
                     </label>
                 </div>
@@ -70,13 +98,21 @@ const StyledWrapper = styled.div`
         border-radius: 0.5rem;
         border: none;
         padding: 0.5rem 0;
-        color: rgba(51, 65, 85, 1);
+        color: rgba(51, 65, 85, 1); /* текст для звичайного стану */
+        // background-color: #f3f3f3; /* фон для неактивної опції */
         transition: all 0.15s ease-in-out;
     }
 
     .radio-inputs div .radio input:checked + .name {
-        background-color: #fff;
+        background-color: #fff; /* активна опція */
         font-weight: 700;
+        color: #2c2c2c;
+    }
+
+    .radio-inputs div .radio input:disabled + .name {
+        // background-color: #ededed; /* недоступна опція */
+        color: #b5b5b5;
+        cursor: not-allowed;
     }
 `;
 

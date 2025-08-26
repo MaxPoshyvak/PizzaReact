@@ -5,14 +5,15 @@ import Sort from '../../../src/UI/Sort/Sort';
 
 export default function Main() {
     const [sortType, setSortType] = useState('');
+    const [pizzaClass, setPizzaClass] = useState('Всі');
+    const [pizzas, setPizzas] = useState([]);
+    const [loading, setLoading] = useState(true); // ⬅️ стан завантаження
 
     const handleValueChange = (newValue) => {
-        setSortType(newValue); // зберігаємо те, що повернула дитина
+        setSortType(newValue);
     };
 
     const allPizzaClases = ['Всі', "М'ясні", 'Гострі', 'Вегетаріанські', 'Гриль'];
-    const [pizzaClass, setPizzaClass] = useState('Всі');
-    const [pizzas, setPizzas] = useState([]);
 
     const filteredPizzas = pizzaClass === 'Всі' ? pizzas : pizzas.filter((pizza) => pizza.classes.includes(pizzaClass));
 
@@ -39,6 +40,8 @@ export default function Main() {
                 setPizzas(data);
             } catch (e) {
                 console.error(e);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -48,7 +51,7 @@ export default function Main() {
     return (
         <main className="py-[40px]">
             <div className="flex justify-between items-center">
-                <div className="flex  gap-[9px] mb-[40px]">
+                <div className="flex gap-[9px] mb-[40px]">
                     {allPizzaClases.map((item) => (
                         <Button
                             key={item}
@@ -80,16 +83,20 @@ export default function Main() {
                 className={`flex ${
                     sortedPizzas.length < 4 ? 'justify-start' : 'justify-between'
                 } flex-wrap mt-[40px] gap-y-[65px] gap-x-[45px] mx-auto`}>
-                {sortedPizzas.map((pizza) => (
-                    <Card
-                        key={pizza.id}
-                        id={pizza.id}
-                        imgPath={pizza.imgPath}
-                        title={pizza.title}
-                        price={pizza.price}
-                        classes={pizza.classes}
-                    />
-                ))}
+                {loading
+                    ? [...Array(8)].map((_, index) => <img key={index} src="/img/PizzaSkeleton.png" alt="" />)
+                    : sortedPizzas.map((pizza) => (
+                          <Card
+                              key={pizza.id}
+                              id={pizza.id}
+                              imgPath={pizza.imgPath}
+                              title={pizza.title}
+                              price={pizza.price}
+                              classes={pizza.classes}
+                              sizes={pizza.sizes}
+                              type={pizza.type}
+                          />
+                      ))}
             </div>
         </main>
     );
