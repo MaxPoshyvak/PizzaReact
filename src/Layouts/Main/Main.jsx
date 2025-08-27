@@ -7,7 +7,7 @@ export default function Main() {
     const [sortType, setSortType] = useState('');
     const [pizzaClass, setPizzaClass] = useState('Всі');
     const [pizzas, setPizzas] = useState([]);
-    const [loading, setLoading] = useState(true); // ⬅️ стан завантаження
+    const [loading, setLoading] = useState(true);
 
     const handleValueChange = (newValue) => {
         setSortType(newValue);

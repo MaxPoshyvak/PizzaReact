@@ -1,7 +1,12 @@
 import { Button } from '@mui/material';
 import { ShoppingCart } from 'lucide-react';
+import useStore from '/src/Stores/СartCount.js';
 
 export default function Header() {
+    const cartCount = useStore((state) => state.cartCount);
+
+    const curentPizzaInCart = useStore((state) => state.currentPizzaInCart);
+
     return (
         <header className="flex items-center justify-between border-b-[#F6F6F6] border-b-[1px] pb-[40px]">
             <div className="flex items-center gap-[17px]">
@@ -26,10 +31,13 @@ export default function Header() {
                             backgroundColor: '#F55A1B',
                         },
                     }}>
-                    <div className="font-bold">520 ₴</div>
+                    <div className="font-bold">
+                        {curentPizzaInCart.map((pizza) => pizza.price).reduce((a, b) => a + b, 0)} ₴
+                    </div>
                     <span className="w-[1px] h-[70%] bg-white opacity-25"></span>
                     <span className="flex items-center gap-[8px] font-bold">
-                        <ShoppingCart width={20} fontWeight={700} />3
+                        <ShoppingCart width={20} fontWeight={700} />
+                        {cartCount}
                     </span>
                 </Button>
             </div>
