@@ -1,5 +1,7 @@
 import { Button } from '@mui/material';
 import { ShoppingCart } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
 import useStore from '/src/Stores/СartCount.js';
 
 export default function Header() {
@@ -17,29 +19,31 @@ export default function Header() {
                 </div>
             </div>
             <div>
-                <Button
-                    sx={{
-                        backgroundColor: '#FE5F1E',
-                        borderRadius: '50px',
-                        width: '150px',
-                        height: '50px',
-                        color: 'white',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '13px',
-                        '&:hover': {
-                            backgroundColor: '#F55A1B',
-                        },
-                    }}>
-                    <div className="font-bold">
-                        {curentPizzaInCart.map((pizza) => pizza.price).reduce((a, b) => a + b, 0)} ₴
-                    </div>
-                    <span className="w-[1px] h-[70%] bg-white opacity-25"></span>
-                    <span className="flex items-center gap-[8px] font-bold">
-                        <ShoppingCart width={20} fontWeight={700} />
-                        {cartCount}
-                    </span>
-                </Button>
+                <Link to="/cart">
+                    <Button
+                        sx={{
+                            backgroundColor: '#FE5F1E',
+                            borderRadius: '50px',
+                            width: '150px',
+                            height: '50px',
+                            color: 'white',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '13px',
+                            '&:hover': {
+                                backgroundColor: '#F55A1B',
+                            },
+                        }}>
+                        <div className="font-bold">
+                            {curentPizzaInCart.map((pizza) => pizza.price).reduce((a, b) => a + b, 0)} ₴
+                        </div>
+                        <span className="w-[1px] h-[70%] bg-white opacity-25"></span>
+                        <span className="flex items-center gap-[8px] font-bold">
+                            <ShoppingCart width={20} fontWeight={700} />
+                            {cartCount}
+                        </span>
+                    </Button>
+                </Link>
             </div>
         </header>
     );

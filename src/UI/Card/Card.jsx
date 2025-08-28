@@ -8,9 +8,6 @@ import useStore from '/src/Stores/СartCount.js';
 const Card = (props) => {
     const add = useStore((state) => state.add);
 
-    const selectedPizzaInCart = useStore((state) => state.currentPizzaInCart);
-    console.log(selectedPizzaInCart);
-
     const [selectedPizza, setSelectedPizza] = useState({});
 
     const handleChange = ({ size, type }) => {
