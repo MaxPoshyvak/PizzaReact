@@ -12,10 +12,15 @@ const Card = (props) => {
 
     const handleChange = ({ size, type }) => {
         setSelectedPizza({
+            imgPath: props.imgPath,
             title: props.title,
             size: size,
             type: type,
-            price: props.price + (type === 'традиційна' ? 15 : 0) + (size === 30 ? 30 : 0) + (size === 40 ? 60 : 0),
+            basePrice: props.price + (type === 'традиційна' ? 15 : 0) + (size === 30 ? 30 : 0) + (size === 40 ? 60 : 0),
+            amount: 1,
+            get price() {
+                return this.basePrice * this.amount;
+            },
         });
     };
 
@@ -33,7 +38,10 @@ const Card = (props) => {
             <div className="flex items-center justify-between w-full mt-[17px]">
                 <div className="font-extrabold text-[22px]">від {props.price} ₴</div>
                 <Button
-                    onClick={() => add(selectedPizza)}
+                    onClick={() => {
+                        add(selectedPizza);
+                        // setSelectedPizza({ ...selectedPizza, amount: selectedPizza.amount + 1 });
+                    }}
                     sx={{
                         backgroundColor: 'transparent',
                         borderRadius: '30px',

@@ -21,6 +21,7 @@ const Radio = ({ size, typeName, sizes, types, onChange }) => {
     useEffect(() => {
         onChange?.({ size: firstAvailableSize, type: firstAvailableType });
     }, []);
+
     return (
         <StyledWrapper>
             <div className="radio-inputs">

@@ -5,8 +5,6 @@ import { Link } from 'react-router-dom';
 import useStore from '/src/Stores/СartCount.js';
 
 export default function Header() {
-    const cartCount = useStore((state) => state.cartCount);
-
     const curentPizzaInCart = useStore((state) => state.currentPizzaInCart);
 
     return (
@@ -35,12 +33,12 @@ export default function Header() {
                             },
                         }}>
                         <div className="font-bold">
-                            {curentPizzaInCart.map((pizza) => pizza.price).reduce((a, b) => a + b, 0)} ₴
+                            {curentPizzaInCart.reduce((acc, pizza) => acc + pizza.basePrice * pizza.amount, 0)} ₴
                         </div>
                         <span className="w-[1px] h-[70%] bg-white opacity-25"></span>
                         <span className="flex items-center gap-[8px] font-bold">
                             <ShoppingCart width={20} fontWeight={700} />
-                            {cartCount}
+                            {curentPizzaInCart.reduce((sum, pizza) => sum + pizza.amount, 0)}
                         </span>
                     </Button>
                 </Link>
